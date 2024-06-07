@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+ {% block content %} 
+ {% include "components/navbar.html" %}
+
+<script src="https://unpkg.com/html5-qrcode@2.0.9/dist/html5-qrcode.min.js"></script>
+
+<div class="cam">
+  <div id="qr-reader"></div>
+  <h2 id="found"></h2>
+  <div id="user-info" class="agent-info">
+  </div>
+</div>
+
+<script>
+    function onScanSuccess(decodedText, decodedResult) {
+        console.log(`Code scanned = ${decodedText}`, decodedResult);
+    
+        // Prepare the URL with query parameters
+        const params = new URLSearchParams({
+            q: decodedText
+        });
+    
+        // Send to backend
+        fetch(`/validate/?${params.toString()}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            const userInfoElement = document.getElementById("user-info");
+            userInfoElement.innerHTML = ""; // Clear previous content
+    
+            if (data.status === 'found') {
+                document.getElementById("found").innerText = "Agente encontrado";
+    
+                // Create a list and populate it with user information
+                const userInfoList = document.createElement("ul");
+                userInfoList.style.listStyle = "none";
+                userInfoList.style.lineHeight = "2px"
+    
+                const nameItem = document.createElement("li");
+                nameItem.textContent = `Nombre: ${data.first_name}`;
+                userInfoList.appendChild(nameItem);
+    
+                const lastNameItem = document.createElement("li");
+                lastNameItem.textContent = `Apellido: ${data.last_name}`;
+                userInfoList.appendChild(lastNameItem);
+    
+                const rankItem = document.createElement("li");
+                rankItem.textContent = `Rango: ${data.rank}`;
+                userInfoList.appendChild(rankItem);
+    
+                const statusItem = document.createElement("li");
+                statusItem.textContent = `Departamento: ${data.employee_status}`;
+                userInfoList.appendChild(statusItem);
+    
+                // Create a link for "Buscar nuevamente"
+                const linkItem = document.createElement("li");
+                const a = document.createElement("a");
+                a.classList.add("btn", "btn-success", "btn-sm");
+                const linkText = document.createTextNode("Buscar nuevamente");
+
+                a.appendChild(linkText);
+                a.href = '/scan_qr/'; //
+                linkItem.appendChild(a);
+                userInfoList.appendChild(linkItem);
+    
+                userInfoElement.appendChild(userInfoList);
+
+            } else {
+                document.getElementById("found").innerText = "Usuario no encontrado";
+            }
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+    
+        // Stop the scan
+        html5QrcodeScanner
+            .clear()
+            .then((_) => {
+                // Show the "found" message
+                document.getElementById("found").innerText = "Encontrado";
+            })
+            .catch((error) => {
+                console.error("Error stopping scan: ", error);
+            });
+    }
+    
+    var html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", {
+        fps: 10,
+        qrbox: { width: 250, height: 250 }, // Adjust the size to be more reasonable
+        // videoConstraints: { facingMode: { exact: "environment" } },
+    });
+    
+    html5QrcodeScanner.render(onScanSuccess);
+    
+</script>
+
+{% endblock content %}

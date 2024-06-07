@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+
+{% block title %} | Home{% endblock title %}
+
+
+
+
+{% block content %}
+
+{% include "components/navbar.html"%}
+
+<div class="container pt-5 ">
+
+    <div class="container" style='position: absolute;'>
+        {% if messages %}
+          <div class="alert-container">
+            {% for message in messages %}
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>{{ message }}</strong> 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+    </div>
+
+    <div class="border rounded-3 shadow p-3">
+        {% if user.is_superuser %}
+          <a class="h3 link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="{% url 'agent_add' %}">Agregar</a>
+        {% endif %}
+        <div class="container table-responsive ">
+            {% include "carnetgenerator/table.html" %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+
+

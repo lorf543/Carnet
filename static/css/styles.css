@@ -1,0 +1,273 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+    font-family: "Montserrat", sans-serif;
+}
+
+.agent-info ul li {
+    list-style: none;
+}
+
+#user-info ul li { 
+    padding: 15px;
+    font-weight: 700;
+}
+
+#qr-reader__status_span{
+    display: none;
+}
+
+#qr-reader div span a {
+    display: none;
+}
+
+.cam {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    flex-direction: column;
+    margin-top:100px;
+}
+
+
+@media screen and (max-width: 992px) {
+    .cam {
+        margin-top:100px;
+        margin-left: -3%;
+    }
+
+}
+
+.cam h2 {
+    margin-top: 50px;
+    font-weight: 800;
+}
+
+.navbar-brand{
+    font-weight: 900;
+}
+
+.divider {
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.divider::before, .divider::after {
+    flex: 1;
+    content: '';
+    padding: 1px;
+    background-color: rgb(127, 126, 126);
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+@media screen and (max-width: 992px) {
+    .divider {
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+    }
+
+    .divider::before, .divider::after {
+        flex: 1;
+        content: '';
+        padding: 1px;
+        background-color: rgb(127, 126, 126);
+        margin: 1px;
+    }
+}
+
+.container-carnet {
+    display: flex;
+    justify-content: center;
+}
+    
+@media (max-width: 992px) {
+
+    .container-carnet {
+        display: block;
+        margin-top: 10px;
+        margin-left: 16px;
+        padding-bottom: 25px;
+        border: none;
+    }
+
+    .carnet_back{
+        margin-top: 10px;
+        margin-left: -1px !important;
+    }
+    
+}
+
+
+
+
+.carnet_back {
+    background-image: url('/img/back_background.jpeg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 250px;
+    height: 400px;
+    margin-left: 50px;
+}
+
+
+.carnet_front header {
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+}
+
+.logo {
+    width: 73px;
+}
+
+.logo img {
+    max-width: 100%;
+}
+
+.title {
+    padding-bottom: 20px;
+}
+
+.title h1 {
+    letter-spacing: 5px;
+    text-align: center;
+    color: rgb(34, 82, 12);
+    ;
+    font-weight: 800;
+}
+
+.title p {
+    font-size: 9px;
+    margin-top: -18px;
+    margin-left: -11px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.profile_picture img {
+    width: 120px; /* Ancho deseado */
+    height: 120px; /* Altura deseada */
+    object-fit: cover;
+    margin-left: 25%;
+}
+
+.information {
+    line-height: 2px;
+    text-align: center;
+    padding-top: 9px;
+}
+
+.information .carnet_number {
+    letter-spacing: 2px;
+    color: rgb(197, 41, 41);
+    font-size: 25px;
+    font-weight: bolder;
+}
+
+.logo_army img {
+    max-width: 50%;
+    margin-top: 5px;
+    filter: contrast(100%);
+}
+
+footer {
+    background-color: #359be9;
+    text-align: center;
+    font-weight: 800;
+
+}
+
+footer h2 {
+    margin-top: 19px;
+}
+
+.escudos {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding-top: 10px;
+
+}
+
+.escudos div{
+    width: 40px;
+}
+
+.escudos img {
+    max-width: 100%;
+}
+
+.carnet_back p {
+    text-align: center;
+    margin: 2px;
+}
+
+.verticalLine {
+    border-bottom: 1px solid rgb(0, 0, 0);
+}
+
+.personal_information {
+    font-size: 12px;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 10px;
+}
+
+.personal_information .campos-l {
+    font-weight: 800;
+}
+
+.personal_information .campos-r {
+    font-weight: 600;
+}
+
+.advertencia h2{
+    color: rgb(238, 23, 23);
+    font-weight: 800;
+    text-align: center;
+    margin: -5px;
+
+}
+
+.advertencia p {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.validar {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: -9px;
+}
+
+.qr{
+    width: 90px;
+    height: 90px;
+}
+
+.qr img {
+    max-width: 100%;
+}
+
+.fecha{
+    font-size: 8px;
+    font-weight: 600;
+}
+
+.firma {
+    margin-top: 90px;
+}
+
+.firma_letra {
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.firma_linea {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.523);
+}

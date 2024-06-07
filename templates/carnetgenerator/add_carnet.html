@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<div class="container py-5">
+    <a class='btn btn-warning  my-2' href="/">Back</a>
+    <form method="POST" class="border rounded-1 shadow" enctype="multipart/form-data" autocomplete="off" novalidate>
+        {% csrf_token %}
+        <div class="row pt-3">
+            <div class="col-sm-2 col-lg-3 col-md-6">
+                <div class="px-3 pt-lg-1 pt-5">
+                    {{agent_form.profile_picture|as_crispy_field}}
+                </div>
+            </div>
+            <div class="col-sm-2 col-lg-3 col-md-4">
+                <div class="px-3 pt-lg-1 pt-5">{{agent_form.first_name|as_crispy_field}}</div>
+            </div>
+            <div class="col-sm-2 col-lg-3 col-md-4">
+                <div class="px-3 py-1">{{agent_form.last_name|as_crispy_field}}</div>
+            </div>
+            <div class="col-sm-2 col-lg-3 col-md-4">
+                <div class="px-3 py-1">{{agent_form.rank|as_crispy_field}}</div>
+            </div>
+            <div class="col-sm-2 col-lg-3 col-md-4">
+                <div class="px-3 py-1">{{agent_form.employee_status|as_crispy_field}}</div>
+            </div>
+        </div>
+        <div class="divider">Informacion Personal</div>
+        <div class="row">
+
+            <div class="col-sm-2 col-lg-3 col-md-4">
+                <div class="px-3 py-1">{{agent_form.identification|as_crispy_field}}</div>
+                <div id="id_error" class="ms-5"></div>
+            </div>
+            <div class="col-sm-2 col-lg-3 col-md-4">
+                <div class="px-3 py-1">{{agent_form.height|as_crispy_field}}</div>
+            </div>
+            <div class="col-sm-2 col-lg-3 col-md-4">
+                <div class="px-3 py-1">{{agent_form.weight|as_crispy_field}}</div>
+            </div>
+            <div class="col-sm-2 col-lg-3 col-md-4">
+                <div class="px-3 py-1">{{agent_form.eyes|as_crispy_field}}</div>
+            </div>
+            <div class="col-sm-2 col-lg-3 col-md-4">
+                <div class="px-3 py-1">{{agent_form.skin|as_crispy_field}}</div>
+            </div>
+            <div class="col-sm-2 col-lg-3 col-md-4">
+                <div class="px-3 py-1">{{agent_form.blood_type|as_crispy_field}}</div>
+            </div>
+            <div class="col-sm-2 col-lg-3 col-md-6">
+                <div class="px-3 py-1">{{agent_form.carnet_status|as_crispy_field}}</div>
+            </div>
+        </div>
+        <button class="btn btn-success btn-sm m-3" type="submit">Guardar!</button>
+    </form>
+</div>
+
+
+
+{% endblock content %}
+
