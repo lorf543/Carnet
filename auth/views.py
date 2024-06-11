@@ -4,9 +4,15 @@ from django.views.decorators.cache import cache_control, never_cache
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 
+from django.contrib.auth.models import Group
+
 
 from .forms import UserCreateForm
 # Create your views here.
+
+
+def is_admin(user):
+    return user.is_authenticated and user.is_superuser
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @never_cache
@@ -22,7 +28,7 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
 
         messages.success(
-                request, f'Welcome to work {user}')
+                request, f'Bienbenido {user}')
 
         if user is not None:
 
@@ -55,7 +61,7 @@ def register_user(request):
             # Login the user
             if user is not None:
                 login(request, user)
-                messages.success(request, 'Registration successful')
+                messages.success(request, 'Registro extioso')
                 return redirect('home')
             else:
                 messages.error(request, 'Registration failed. Please try again.')
@@ -72,7 +78,7 @@ def register_user(request):
 @never_cache
 def log_out(request):
     logout(request)
-    messages.success(request, 'You were logout')
+    messages.success(request, 'Fuiste deslogueado')
     return redirect('login_user')
 
 
@@ -81,6 +87,6 @@ def log_out(request):
 def check_username(request):
     username = request.POST.get('username')
     if get_user_model().objects.filter(username=username).exists():
-        return HttpResponse("<div class='text-danger bolder'>This username Already exist.</div>")
+        return HttpResponse("<div class='text-danger bolder'>Este usario ya esta regristado.</div>")
     else:
-        return HttpResponse("<div class='text-success bolder'>This username is available.</div>")
+        return HttpResponse("<div class='text-success bolder'>Este Usuario esta disponible.</div>")

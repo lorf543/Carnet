@@ -41,8 +41,9 @@ def scan_qr(request):
 
 
 @login_required()
-
+@allowed_suers(allowed_roles=['Admin'])
 def home(request):
+
     agents = Agent.objects.all().order_by('-created')
     context = {'agents':agents}
     return render(request,'carnetgenerator/home.html',context)
@@ -50,23 +51,25 @@ def home(request):
 @login_required()
 @allowed_suers(allowed_roles=['Admin'])
 def agent_add(request):
-    if request.method == "POST":
-        agent_form = AgentForm(request.POST, request.FILES)
-        if agent_form.is_valid():
-            agent = agent_form.save(commit=False)
-            agent.added_by = request.user
-            agent.save()
-            messages.success(request, 'Agent saved successfully!')
-            return redirect('/')
-    else:
-        # If it's a GET request, create a new form instance
-        agent_form = AgentForm()
+    if request.user.has_perm('agent.add_agent'):
+
+        if request.method == "POST":
+            agent_form = AgentForm(request.POST, request.FILES)
+            if agent_form.is_valid():
+                agent = agent_form.save(commit=False)
+                agent.added_by = request.user
+                agent.save()
+                messages.success(request, 'Agent saved successfully!')
+                return redirect('/')
+        else:
+            # If it's a GET request, create a new form instance
+            agent_form = AgentForm()
 
     return render(request, 'carnetgenerator/add_carnet.html', {'agent_form': agent_form})
 
 
 #________________HTMX__________________
-
+@allowed_suers(allowed_roles=['Admin'])
 def check_id(request):
     identification = request.POST.get('identification')
     if Agent.objects.filter(identification=identification).exists():
@@ -81,25 +84,27 @@ def check_id(request):
 def agent_update(request,agent_id):
     agent_form = AgentForm()
     agent = get_object_or_404(Agent, id=agent_id)
-
-    if request.method == "POST":
-        agent_form = AgentForm(request.POST,request.FILES, instance=agent)
-        print(agent_form.errors)
-        if agent_form.is_valid():
-            agent = agent_form.save(commit=False)
-            agent.added_by = request.user
-            agent.save()
-            messages.success(
-                request,'Actualizado!')
-        return redirect('/')
-    else:
-        agent_form = AgentForm(instance=agent)
+    
+    if request.user.has_perm('agent.add_agent'):
+        if request.method == "POST":
+            agent_form = AgentForm(request.POST,request.FILES, instance=agent)
+            print(agent_form.errors)
+            if agent_form.is_valid():
+                agent = agent_form.save(commit=False)
+                agent.added_by = request.user
+                agent.save()
+                messages.success(
+                    request,'Actualizado!')
+            return redirect('/')
+        else:
+            agent_form = AgentForm(instance=agent)
 
     context={'agent_form':agent_form}
     return render (request,'carnetgenerator/add_carnet.html',context)
 
 
 @login_required()
+@allowed_suers(allowed_roles=['Admin'])
 def agent_detail(request,agent_id):
     agent = Agent.objects.get(id=agent_id)
     context = {'agent':agent}

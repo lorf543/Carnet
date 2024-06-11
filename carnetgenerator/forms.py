@@ -1,11 +1,15 @@
 from django import forms
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
-
+import re
 
 
 from .models import Agent
 
+def idVal(value):
+    patron = r'^[0-9]*$' 
+    if not re.match(patron, value):
+        raise forms.ValidationError('Solo numeros permitidos')
 
 class AgentForm(forms.ModelForm):
 
@@ -13,9 +17,7 @@ class AgentForm(forms.ModelForm):
         min_length= 11,
         max_length=11,
         label='Identificacion',
-        validators = [RegexValidator('^[0-9\-]*$',
-        message='Only digits and hyphens are allowed.',
-        code='invalid_input')],
+        validators=[idVal],
         error_messages={
             'required': 'Este campo es requerido',
         },

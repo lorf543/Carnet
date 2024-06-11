@@ -9,7 +9,7 @@ from PIL import Image,ImageDraw
 
 import random
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 
 # Create your models here.
 class Agent(models.Model):
