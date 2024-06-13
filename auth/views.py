@@ -27,12 +27,11 @@ def login_user(request):
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
 
-        messages.success(
-                request, f'Bienbenido {user}')
 
         if user is not None:
-
             login(request, user)
+            messages.success(
+                    request, f'Bienvenido {user}')
             return redirect('home')
 
         else:
