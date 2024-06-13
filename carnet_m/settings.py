@@ -151,4 +151,4 @@ LOGOUT_REDIRECT_URL = '/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_TRUSTED_ORIGINS = ['https//*','https://vigilant-renewal-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['http://*','https://vigilant-renewal-production.up.railway.app']
