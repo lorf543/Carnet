@@ -3,6 +3,10 @@ from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 import re
 
+EMPLOYEE_STATUS = (
+    ('Activo','Activo'),
+    ('Inactivo','Inactivo')
+)
 
 from .models import Agent
 
@@ -71,7 +75,8 @@ class AgentForm(forms.ModelForm):
             'required': 'Este campo es requerido',
         }
     )
-    employee_status  = forms.CharField(
+    employee_status  = forms.ChoiceField(
+        choices=EMPLOYEE_STATUS,
         label='Departamento',
         error_messages={
             'required': 'Este campo es requerido',

@@ -1,0 +1,28 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/presentacion.css' %}">
+
+
+
+<div class="welcome-page">
+    <div class="presentation">
+        <img src="{% static '/img/logo-CUSEP.png' %}" alt="">
+    </div>
+        
+    <p>
+       <b>Cuerpo de seguridad Presidencial</b> para mas informacion llamenos al 809-555-5555 o example@example.com 
+       <p><a href="{% url 'login_user' %}">Entrar</a></p>
+    </p>
+
+    {% comment %} <div>
+        <form action="" method="GET">
+            <input type="text" name='carnet' name="carnet" id="carnet">
+            <button
+            type="submit" class="btn btn-outline-success" >
+            search
+          </button>
+        </form>
+      
+    </div> {% endcomment %}
+</div>
+

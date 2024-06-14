@@ -1,18 +1,25 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.cache import cache_control, never_cache
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 
 from django.contrib.auth.models import Group
+from carnetgenerator.models import Agent
 
 
 from .forms import UserCreateForm
 # Create your views here.
 
 
-def is_admin(user):
-    return user.is_authenticated and user.is_superuser
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@never_cache
+def welcome(request):
+    if request.user.is_authenticated:
+        return redirect('welcome')
+    
+    return render(request,'auth/authenticate/welcome.html')
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @never_cache

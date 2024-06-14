@@ -7,6 +7,7 @@ from .decorators import allowed_suers
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import cache_control
 
 from django.views.decorators.http import require_GET
 
@@ -34,13 +35,13 @@ def validate(request):
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)})
 
-
+@login_required(login_url='welcome')
 def scan_qr(request):  
 
     return render(request,'carnetgenerator/read_qr.html',)
 
 
-@login_required()
+@login_required(login_url='welcome')
 @allowed_suers(allowed_roles=['Admin'])
 def home(request):
 
@@ -60,7 +61,7 @@ def agent_add(request):
                 agent.added_by = request.user
                 agent.save()
                 messages.success(request, 'Agent saved successfully!')
-                return redirect('/')
+                return redirect('home')
         else:
             # If it's a GET request, create a new form instance
             agent_form = AgentForm()
@@ -69,7 +70,6 @@ def agent_add(request):
 
 
 #________________HTMX__________________
-@allowed_suers(allowed_roles=['Admin'])
 def check_id(request):
     identification = request.POST.get('identification')
     if Agent.objects.filter(identification=identification).exists():
@@ -95,7 +95,7 @@ def agent_update(request,agent_id):
                 agent.save()
                 messages.success(
                     request,'Actualizado!')
-            return redirect('/')
+            return redirect('home')
         else:
             agent_form = AgentForm(instance=agent)
 

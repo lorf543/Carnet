@@ -11,6 +11,11 @@ import random
 
 from django.contrib.auth.models import User, Permission
 
+
+EMPLOYEE_STATUS = (
+    ('Activo','Activo'),
+    ('Inactivo','Inactivo')
+)
 # Create your models here.
 class Agent(models.Model):
     profile_picture = models.FileField(upload_to='profile_picture', max_length=100)
@@ -18,7 +23,7 @@ class Agent(models.Model):
     last_name = models.CharField(max_length=50)
     rank = models.CharField(max_length=50)
     id_carnet = models.CharField(max_length=50, null=True, blank = True)
-    employee_status = models.CharField(max_length=50)
+    employee_status = models.CharField(max_length=50, choices=EMPLOYEE_STATUS)
     carnet_status = models.CharField(max_length=50, null=True, blank = True)
     qr_code = models.ImageField(upload_to='qr_code', null=True, blank = True)
     
@@ -41,26 +46,26 @@ class Agent(models.Model):
         return self.first_name
     
     def save(self, *args, **kwargs):
-        
-        if not self.id_carnet:
-            while True:
-                random_code = random.randint(10000000, 99999999)
-                if not Agent.objects.filter(id_carnet=random_code).exists():
-                    self.id_carnet = random_code
-                break            
+        if self._state.adding:
+            if not self.id_carnet:
+                while True:
+                    random_code = random.randint(10000000, 99999999)
+                    if not Agent.objects.filter(id_carnet=random_code).exists():
+                        self.id_carnet = random_code
+                    break            
 
-        #if self._state.adding:
-            qrcode_image =qrcode.make(self.id_carnet)
-            canvas = Image.new('RGB', (290,290), 'white')
-            draw = ImageDraw.Draw(canvas)
-            canvas.paste(qrcode_image)
-            fname = f'qr_code={self.id_carnet}.png'
-            buffer = BytesIO()
-            canvas.save(buffer,'PNG')
-            self.qr_code.save(fname, File(buffer), save=False)
-            canvas.close()
+            
+                qrcode_image =qrcode.make(self.id_carnet)
+                canvas = Image.new('RGB', (290,290), 'white')
+                draw = ImageDraw.Draw(canvas)
+                canvas.paste(qrcode_image)
+                fname = f'qr_code={self.id_carnet}.png'
+                buffer = BytesIO()
+                canvas.save(buffer,'PNG')
+                self.qr_code.save(fname, File(buffer), save=False)
+                canvas.close()
 
-            super().save(*args, **kwargs)
+                super().save(*args, **kwargs)
 
 
 
