@@ -145,18 +145,18 @@ WSGI_APPLICATION = 'carnet_m.wsgi.application'
 
 
 # DATABASES = {
-#     'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+#     'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
 # }
 
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DATABASE_NAME'),
-        'USER': os.environ.get('DATABASE_USER'),
-        'PASSWORD': os.environ.get('DATABASE_PASS'),
-        'HOST': os.environ.get('DATABASE_HOST'),
-        'PORT':  os.environ.get('DATABASE_PORT'),
+        'NAME': 'railway',
+        'USER':'postgres' ,
+        'PASSWORD':os.environ.get('DATABASE_PASS'),
+        'HOST':'monorail.proxy.rlwy.net',
+        'PORT': os.environ.get('DATABASE_PORT'),
     }
 }
 
