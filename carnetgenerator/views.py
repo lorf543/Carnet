@@ -12,6 +12,15 @@ from django.views.decorators.cache import cache_control
 from django.views.decorators.http import require_GET
 
 # Create your views here.
+class ExceptionMiddleware(object):
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        return self.get_response(request)
+
+    def process_exception(self, request, exception): 
+        return HttpResponse("in exception")
 
 @login_required()
 @require_GET

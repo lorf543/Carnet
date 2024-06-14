@@ -12,6 +12,15 @@ from carnetgenerator.models import Agent
 from .forms import UserCreateForm
 # Create your views here.
 
+class ExceptionMiddleware(object):
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        return self.get_response(request)
+
+    def process_exception(self, request, exception): 
+        return HttpResponse("in exception")
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @never_cache
