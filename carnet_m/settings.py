@@ -13,6 +13,8 @@ import os
 from pathlib import Path
 import environ
 
+import dj_database_url
+
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -28,14 +30,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG') == 'False'
+DEBUG = os.environ.get('DEBUG') == 'True'
+
 
 ALLOWED_HOSTS = ['127.0.0.1','carnet-production.up.railway.app']
 
-
+CSRF_TRUSTED_ORIGINS = ['http://*','https://carnet-production.up.railway.app']
 
 # Application definition
 
@@ -67,8 +71,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
 ]
+
+
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # LOGGING = {
 #     'version': 1,
@@ -138,16 +144,19 @@ WSGI_APPLICATION = 'carnet_m.wsgi.application'
 # }
 
 
+# DATABASES = {
+#     'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+# }
 
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'ntVuiFfaUuEpzAcqMaiUJaRXklaXsArY',
-        'HOST': 'roundhouse.proxy.rlwy.net',
-        'PORT': '27747',
+        'NAME': os.environ.get('DATABASE_NAME'),
+        'USER': os.environ.get('DATABASE_USER'),
+        'PASSWORD': os.environ.get('DATABASE_PASS'),
+        'HOST': os.environ.get('DATABASE_HOST'),
+        'PORT':  os.environ.get('DATABASE_PORT'),
     }
 }
 
@@ -193,13 +202,12 @@ STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 LOGIN_URL = 'login_user/'
 LOGIN_REDIRECT_URL = '/'
@@ -210,4 +218,4 @@ LOGOUT_REDIRECT_URL = '/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_TRUSTED_ORIGINS = ['http://*','https://carnet-production.up.railway.app']
+

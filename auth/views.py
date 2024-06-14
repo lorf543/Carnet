@@ -16,8 +16,6 @@ from .forms import UserCreateForm
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @never_cache
 def welcome(request):
-    if request.user.is_authenticated:
-        return redirect('welcome')
     
     return render(request,'auth/authenticate/welcome.html')
 
