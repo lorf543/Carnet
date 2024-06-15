@@ -116,6 +116,8 @@ WSGI_APPLICATION = 'carnet_m.wsgi.application'
 # }
 
 
+RAILWAY_VOLUME_PATH = '/app'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -126,7 +128,6 @@ DATABASES = {
         'PORT': '54713',
     }
 }
-
 
 
 # Password validation
@@ -163,11 +164,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+MEDIA_ROOT = os.path.join(RAILWAY_VOLUME_PATH, 'media')
+MEDIA_URL = '/media/'
+
+
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+STATIC_ROOT = os.path.join(RAILWAY_VOLUME_PATH, 'staticfiles')
+
 
 #STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 #STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
