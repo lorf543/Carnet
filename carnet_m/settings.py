@@ -50,13 +50,14 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    #'whitenoise.runserver_nostatic'
     'django.contrib.staticfiles',
-    'whitenoise.runserver_nostatic',
     'corsheaders',
     'carnetgenerator',
     'crispy_forms',
     'crispy_bootstrap5',
     'django_cleanup.apps.CleanupConfig',
+    
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -74,41 +75,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
-
-
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'formatters': {
-#         'verbose': {
-#             'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-#             'datefmt' : "%d/%b/%Y %H:%M:%S"
-#         },
-#         'simple': {
-#             'format': '%(levelname)s %(message)s'
-#         },
-#     },
-#     'handlers': {
-#         'file': {
-#             'level': 'DEBUG',
-#             'class': 'logging.FileHandler',
-#             'filename': 'mysite.log',
-#             'formatter': 'verbose'
-#         },
-#     },
-#     'loggers': {
-#         'django': {
-#             'handlers':['file'],
-#             'propagate': True,
-#             'level':'DEBUG',
-#         },
-#         'MYAPP': {
-#             'handlers': ['file'],
-#             'level': 'DEBUG',
-#         },
-#     }
-# }
 
 ROOT_URLCONF = 'carnet_m.urls'
 
@@ -209,7 +175,8 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+#STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 LOGIN_URL = 'login_user/'
 LOGIN_REDIRECT_URL = 'home'
