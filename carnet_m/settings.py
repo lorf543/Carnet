@@ -163,13 +163,25 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
+RAILWAY_VOLUME_MOUNT_PATH = '/app'
 
-MEDIA_ROOT = os.path.join(RAILWAY_VOLUME_PATH, 'media')
+
+# MEDIA_ROOT = BASE_DIR / 'media'
+# STATIC_URL = '/media/'
+
+# STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+
+
+
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(RAILWAY_VOLUME_MOUNT_PATH, 'media')
 
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(RAILWAY_VOLUME_PATH, 'staticfiles')
+STATIC_ROOT = os.path.join(RAILWAY_VOLUME_MOUNT_PATH, 'staticfiles')
+
+STATICFILES_DIRS = [BASE_DIR / 'static',]
 
 
 #STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
