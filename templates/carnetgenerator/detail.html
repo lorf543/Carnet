@@ -145,61 +145,24 @@
 
 <!-- Script para generar el PDF -->
 <script>
-  function getImageDataUrl(url, callback) {
-    var img = new Image();
-    img.crossOrigin = 'Anonymous'; // Esto es necesario para evitar problemas de CORS
-    img.onload = function() {
-      var canvas = document.createElement('canvas');
-      var ctx = canvas.getContext('2d');
-      canvas.height = this.naturalHeight;
-      canvas.width = this.naturalWidth;
-      ctx.drawImage(this, 0, 0);
-      var dataURL = canvas.toDataURL('image/png');
-      callback(dataURL); // Llamamos al callback con la Data URL de la imagen
-    };
-    img.src = url;
-  }
-  
   function generatePDF() {
     const element = document.getElementById("pageprint");
-    
-    // Asumiendo que tienes un array con las URLs de tus imágenes
-    var imagesToLoad = ['URL_IMAGEN_1', 'URL_IMAGEN_2', ...];
-    var loadedImagesCount = 0;
-    
-    imagesToLoad.forEach(function(imageUrl) {
-      getImageDataUrl(imageUrl, function(dataUrl) {
-        // Reemplaza la fuente de la imagen en tu elemento con la Data URL
-        var imgElements = element.querySelectorAll('img');
-        for (var i = 0; i < imgElements.length; i++) {
-          if (imgElements[i].src === imageUrl) {
-            imgElements[i].src = dataUrl;
-          }
-        }
-        
-        // Verifica si todas las imágenes han sido procesadas
-        loadedImagesCount++;
-        if (loadedImagesCount === imagesToLoad.length) {
-          // Todas las imágenes están listas, genera el PDF
-          var options = {
-            margin: [-1, -4, 0, 0],
-            filename: "documento.pdf",
-            image: { type: "jpeg", quality: 0.9 },
-            html2canvas: {
-              scale: 2,
-              letterRendering: true,
-            },
-            jsPDF: {
-              unit: "mm",
-              format: "a4",
-              orientation: "portrait",
-            },
-          };
-          
-          html2pdf().from(element).set(options).output('dataurlnewwindow');
-        }
-      });
-    });
+    var options = {
+      margin: [-1, -4, 0, 0], // Márgenes a 0 para que ocupe toda la página
+      filename: "documento.pdf",
+      image: { type: "jpeg", quality: 0.9 },
+      html2canvas: {
+        scale: 2, // Ajusta la escala según tus necesidades
+        letterRendering: true,
+      },
+      jsPDF: {
+        unit: "mm",
+        format: "a4", // Cambia el formato a A4
+        orientation: "portrait", // O "landscape" si prefieres
+      },
+    };
+  
+    html2pdf().from(element).set(options).output('dataurlnewwindow');
   }
 </script>
 
