@@ -34,7 +34,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '29%1d8%6@)kv-a9=aen4qhs)w6s(%fkj#5edtjm5h$+upshma'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG') == 'False'
+DEBUG = os.environ.get('DEBUG') == 'True'
 
 
 #ALLOWED_HOSTS = ['127.0.0.1','carnet-production.up.railway.app']
@@ -197,17 +197,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-
-STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-MEDIA_URL = '/media/'
+STATIC_URL = '/static/'
 
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
-MEDIA_ROOT = BASE_DIR / 'media'
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
