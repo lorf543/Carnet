@@ -38,7 +38,7 @@ DEBUG = os.environ.get('DEBUG') == 'True'
 
 
 #ALLOWED_HOSTS = ['127.0.0.1','carnet-production.up.railway.app']
-ALLOWED_HOSTS = ['*'] 
+ALLOWED_HOSTS = ['127.0.0.1','carnet-production.up.railway.app'] 
 
 CSRF_TRUSTED_ORIGINS = ['http://*','https://carnet-production.up.railway.app']
 
@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    #'whitenoise.runserver_nostatic'
+    'whitenoise.runserver_nostatic'
     'django.contrib.staticfiles',
     'corsheaders',
     'carnetgenerator',
@@ -103,12 +103,12 @@ WSGI_APPLICATION = 'carnet_m.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # DATABASES = {
@@ -116,18 +116,18 @@ WSGI_APPLICATION = 'carnet_m.wsgi.application'
 # }
 
 
-RAILWAY_VOLUME_PATH = ''
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER':'postgres' ,
-        'PASSWORD':'LcTMXorGuNaOmyNPmLgGlqQGhGcpRFZI',
-        'HOST':'monorail.proxy.rlwy.net',
-        'PORT': '54713',
-    }
-}
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'railway',
+#         'USER':'postgres' ,
+#         'PASSWORD':'LcTMXorGuNaOmyNPmLgGlqQGhGcpRFZI',
+#         'HOST':'monorail.proxy.rlwy.net',
+#         'PORT': '54713',
+#     }
+# }
 
 
 # Password validation
@@ -163,30 +163,20 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-RAILWAY_VOLUME_MOUNT_PATH = '/app'
 
 
-# MEDIA_ROOT = BASE_DIR / 'media'
-# STATIC_URL = '/media/'
+STATIC_URL = 'static/'
 
-# STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'carnet_m/static')
+]
 
-
-
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(RAILWAY_VOLUME_MOUNT_PATH, 'media')
-
-
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(RAILWAY_VOLUME_MOUNT_PATH, 'staticfiles')
-
-STATICFILES_DIRS = [BASE_DIR / 'static',]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 #STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-#STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 LOGIN_URL = 'login_user/'
 LOGIN_REDIRECT_URL = 'home'

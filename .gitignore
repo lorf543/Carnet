@@ -16,6 +16,7 @@ db.sqlite3
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+staticfiles
 
 # AWS User-specific
 .idea/**/aws.xml
