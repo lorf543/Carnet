@@ -116,7 +116,7 @@ WSGI_APPLICATION = 'carnet_m.wsgi.application'
 # }
 
 
-RAILWAY_VOLUME_PATH = '/app'
+RAILWAY_VOLUME_PATH = ''
 
 DATABASES = {
     'default': {
