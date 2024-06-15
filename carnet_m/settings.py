@@ -163,27 +163,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-
-
-# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-
-# Directorios estáticos
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
-    BASE_DIR / 'static'
+    os.path.join(BASE_DIR, 'static'),
 ]
 
-# Directorios estáticos y multimedia según el entorno
-if os.environ.get('RAILWAY_ENVIRONMENT'):
-    MEDIA_ROOT = '/app/media/'
-    STATIC_ROOT = '/app/static/'
-else:
-    MEDIA_ROOT = BASE_DIR / 'media'
-    STATIC_ROOT = BASE_DIR / 'collected_static'
-
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+#STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+#STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 LOGIN_URL = 'login_user/'
 LOGIN_REDIRECT_URL = 'home'
