@@ -209,14 +209,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-
-#STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-STORAGES = {
-    # ...
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 LOGIN_URL = 'login_user/'
 LOGIN_REDIRECT_URL = 'home'
