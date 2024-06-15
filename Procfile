@@ -1,1 +1,1 @@
-web: python manage.py collectstatic && gunicorn carnet_m.wsgi
+web: python manage.py collectstatic && gunicorn --chdir carnet_m 'carnet_m.wsgi'
