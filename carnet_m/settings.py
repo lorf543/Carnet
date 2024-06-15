@@ -57,8 +57,6 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'django_cleanup.apps.CleanupConfig',
-    "whitenoise.runserver_nostatic",
-    "django.contrib.staticfiles",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
