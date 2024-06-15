@@ -165,7 +165,7 @@ USE_TZ = True
 
 
 
-# URLs
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
@@ -180,11 +180,10 @@ if os.environ.get('RAILWAY_ENVIRONMENT'):
     STATIC_ROOT = '/app/static/'
 else:
     MEDIA_ROOT = BASE_DIR / 'media'
-    STATIC_ROOT = BASE_DIR / 'staticfiles'
-
+    STATIC_ROOT = BASE_DIR / 'collected_static'
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-#STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 LOGIN_URL = 'login_user/'
 LOGIN_REDIRECT_URL = 'home'
