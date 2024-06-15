@@ -103,12 +103,12 @@ WSGI_APPLICATION = 'carnet_m.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # DATABASES = {
@@ -118,16 +118,16 @@ DATABASES = {
 
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'railway',
-#         'USER':'postgres' ,
-#         'PASSWORD':'LcTMXorGuNaOmyNPmLgGlqQGhGcpRFZI',
-#         'HOST':'monorail.proxy.rlwy.net',
-#         'PORT': '54713',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER':'postgres' ,
+        'PASSWORD':'LcTMXorGuNaOmyNPmLgGlqQGhGcpRFZI',
+        'HOST':'monorail.proxy.rlwy.net',
+        'PORT': '54713',
+    }
+}
 
 
 # Password validation
@@ -171,6 +171,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
 #STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 #STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
