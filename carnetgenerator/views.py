@@ -7,20 +7,11 @@ from .decorators import allowed_suers
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.cache import cache_control
+from django.views.decorators.cache import cache_control, never_cache
 
 from django.views.decorators.http import require_GET
 
 # Create your views here.
-class ExceptionMiddleware(object):
-    def __init__(self, get_response):
-        self.get_response = get_response
-
-    def __call__(self, request):
-        return self.get_response(request)
-
-    def process_exception(self, request, exception): 
-        return HttpResponse("in exception")
 
 @login_required()
 @require_GET
@@ -52,6 +43,8 @@ def scan_qr(request):
 
 @login_required(login_url='welcome')
 @allowed_suers(allowed_roles=['Admin'])
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@never_cache
 def home(request):
 
     agents = Agent.objects.all().order_by('-created')
