@@ -57,6 +57,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'django_cleanup.apps.CleanupConfig',
+    "whitenoise.runserver_nostatic",
+    "django.contrib.staticfiles",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -209,7 +211,14 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
+#STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+STORAGES = {
+    # ...
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 LOGIN_URL = 'login_user/'
 LOGIN_REDIRECT_URL = 'home'
