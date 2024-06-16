@@ -33,9 +33,6 @@
   
   
   {% if request|is_pc %}
-    PC stuff...
- 
-
     <div class="mt-5 ms-5">
       <button class="btn btn-success my-2" id="printBtn" type="button" onclick="generatePDF();">
         Imprimir
@@ -151,8 +148,32 @@
     </div>
   {% endif %}
   {% if request|is_mobile %}
-    Mobile device stuff...
-{% endif %}
+    <div>
+      <p class="text-center">Vista limitada desde dispositivos móviles</p>
+      <a
+        class="ms-5 h6 link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+        href="{% url 'home' %}">Back</a
+      >
+      <div class="d-flex pt-3">
+
+        <div class="col ms-4">
+          <div class="fw-bolder">Nombre</div>
+          <div class="fw-bolder">Apellido</div>
+          <div class="fw-bolder">Rango</div>
+          <div class="fw-bolder">Numero de Carnet</div>
+        </div>
+        
+        <div class="col ms-4">
+          <div class="">{{ agent.first_name}}</div>
+          <div class="">{{ agent.last_name}}</div>
+          <div class="">{{ agent.rank}}</div>
+          <div class="">{{ agent.id_carnet}}</div>
+        </div>
+
+        
+      </div>
+    </div>
+  {% endif %}
   <script src="{% static 'scripts/print.js' %}"></script>  
   
 {% endblock %}

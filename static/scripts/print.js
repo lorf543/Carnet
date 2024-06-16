@@ -1,14 +1,3 @@
-function isMobileUser() {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.platform);
-  }
-  let printBtn = document.getElementById('printBtn')
-  let mobile = isMobileUser()
-  if (mobile) {
-    printBtn.style.display='none';
-  }
-  else{
-
-}
 
 
 function imagesLoaded(element, callback) {
