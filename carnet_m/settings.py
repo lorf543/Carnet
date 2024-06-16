@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'django_cleanup.apps.CleanupConfig',
+    'django_user_agents',
     
 ]
 
@@ -69,9 +70,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware'
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+
+USER_AGENTS_CACHE = 'default'
 
 ROOT_URLCONF = 'carnet_m.urls'
 

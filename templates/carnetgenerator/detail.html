@@ -1,7 +1,9 @@
 {% extends "base.html" %} 
 
+
 {% block content %} 
 {% include "components/navbar.html"%} 
+{% load user_agents %}
 {% load static %} 
 
 
@@ -28,176 +30,130 @@
   </style>
 </head>
 <body>
+  
+  
+  {% if request|is_pc %}
+    PC stuff...
+ 
 
+    <div class="mt-5 ms-5">
+      <button class="btn btn-success my-2" id="printBtn" type="button" onclick="generatePDF();">
+        Imprimir
+      </button>
+      {% if user.is_superuser %}
+      <a
+        href="{% url 'agent_update' agent.id %}"
+        class="h6 link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+        >Editar</a
+      >
+      {% endif %} -
+      <a
+        class="h6 link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+        href="{% url 'home' %}">Back</a
+      >
+    </div>
 
-  <div class="mt-5 ms-5">
-    <button class="btn btn-success my-2" type="button" onclick="generatePDF();">
-      Imprimir
-    </button>
-    {% if user.is_superuser %}
-    <a
-      href="{% url 'agent_update' agent.id %}"
-      class="h6 link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
-      >Editar</a
-    >
-    {% endif %} -
-    <a
-      class="h6 link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
-      href="{% url 'home' %}">Back</a
-    >
-  </div>
+    <div id="pageprint">
+      <div class="book">
+        <div class="page carnet_front">
+          <div class="container-carnet">
+            <header>
+              <div class="logo">
+                <img src="{% static '/img/logo-CUSEP.png' %}" alt="logo cusep" />
+              </div>
+              <div class="title-header">
+                <div class="siglas">CUSEP</div>
+                <div class="titulo">CUERPO DE SEGURIDAD PRESIDENCIAL</div>
+              </div>
+            </header>
 
-  <div id="pageprint">
-    <div class="book">
-      <div class="page carnet_front">
-        <div class="container-carnet">
-          <header>
-            <div class="logo">
-              <img src="{% static '/img/logo-CUSEP.png' %}" alt="logo cusep" />
+            <div class="profile_picture">
+              <img src="{{ agent.profile_picture.url }}" alt="profile picture" crossOrigin="anonymous" />
             </div>
-            <div class="title-header">
-              <div class="siglas">CUSEP</div>
-              <div class="titulo">CUERPO DE SEGURIDAD PRESIDENCIAL</div>
+
+            <div class="personal_info">
+              <p class="firstname">{{ agent.first_name }}</p>
+              <p class="lastname">{{ agent.last_name }}</p>
+              <p class="rango">{{ agent.rank }}</p>
+              <p class="id_carnet">{{ agent.id_carnet }}</p>
+              <div class="logo_army">
+                <img src="{% static '/img/Fuerzas Armadas.png' %}" alt="logo army" />
+              </div>
             </div>
+
+            <footer>
+              <h2>Contratado</h2>
+            </footer>
+          </div>
+        </div>
+        <div class="page carnet_back">
+          <div class="escudos">
+            <div class="ejercito_escudo">
+              <img src="{% static '/img/Ejercito.png' %}" alt="ejercito escudo" />
+            </div>
+            <div class="armada_escudo">
+              <img src="{% static '/img/Armada.png' %}" alt="armada escudo" />
+            </div>
+            <div class="area_escudo">
+              <img src="{% static '/img/Area.png' %}" alt="area escudo" />
+            </div>
+            <div class="policia_escudo">
+              <img src="{% static '/img/Policia_nacional_emblema.png' %}" alt="policia escudo" />
+            </div>
+          </div>
+
+          <header class="mt-4">
+            <p>DATOS PERSONALES</p>
+            <div class="verticalLine"></div>
           </header>
 
-          <div class="profile_picture">
-            <img src="{{ agent.profile_picture.url }}" alt="profile picture" crossOrigin="anonymous" />
-          </div>
+          <div class="personal_information">
+            <div class="campos-l">
+              <div class="cedula">cedula:</div>
+              <div class="estatura">estatura:</div>
+              <div class="ojos">ojos:</div>
+              <div class="color">color de piel:</div>
+              <div class="peso">peso:</div>
+              <div class="sagre">tipo de sangre:</div>
+            </div>
 
-          <div class="personal_info">
-            <p class="firstname">{{ agent.first_name }}</p>
-            <p class="lastname">{{ agent.last_name }}</p>
-            <p class="rango">{{ agent.rank }}</p>
-            <p class="id_carnet">{{ agent.id_carnet }}</p>
-            <div class="logo_army">
-              <img src="{% static '/img/Fuerzas Armadas.png' %}" alt="logo army" />
+            <div class="campos-r">
+              <div>{{ agent.identification }}</div>
+              <div>{{ agent.height }}"</div>
+              <div>{{ agent.eyes }}</div>
+              <div>{{ agent.skin }}</div>
+              <div>{{ agent.weight }}lb</div>
+              <div>{{ agent.blood_type }}</div>
             </div>
           </div>
 
-          <footer>
-            <h2>Contratado</h2>
-          </footer>
-        </div>
-      </div>
-      <div class="page carnet_back">
-        <div class="escudos">
-          <div class="ejercito_escudo">
-            <img src="{% static '/img/Ejercito.png' %}" alt="ejercito escudo" />
-          </div>
-          <div class="armada_escudo">
-            <img src="{% static '/img/Armada.png' %}" alt="armada escudo" />
-          </div>
-          <div class="area_escudo">
-            <img src="{% static '/img/Area.png' %}" alt="area escudo" />
-          </div>
-          <div class="policia_escudo">
-            <img src="{% static '/img/Policia_nacional_emblema.png' %}" alt="policia escudo" />
-          </div>
-        </div>
-
-        <header class="mt-4">
-          <p>DATOS PERSONALES</p>
-          <div class="verticalLine"></div>
-        </header>
-
-        <div class="personal_information">
-          <div class="campos-l">
-            <div class="cedula">cedula:</div>
-            <div class="estatura">estatura:</div>
-            <div class="ojos">ojos:</div>
-            <div class="color">color de piel:</div>
-            <div class="peso">peso:</div>
-            <div class="sagre">tipo de sangre:</div>
+          <div class="advertencia">
+            <h2>advertencia</h2>
+            <p>
+              Si encuentra este carnet entreguelo al puesto militar o policial mas cercano o llamenos al 809-688-6461
+            </p>
           </div>
 
-          <div class="campos-r">
-            <div>{{ agent.identification }}</div>
-            <div>{{ agent.height }}"</div>
-            <div>{{ agent.eyes }}</div>
-            <div>{{ agent.skin }}</div>
-            <div>{{ agent.weight }}lb</div>
-            <div>{{ agent.blood_type }}</div>
-          </div>
-        </div>
-
-        <div class="advertencia">
-          <h2>advertencia</h2>
-          <p>
-            Si encuentra este carnet entreguelo al puesto militar o policial mas cercano o llamenos al 809-688-6461
-          </p>
-        </div>
-
-        <div class="validar">
-          <div>
-            <p class="fecha">Expedido:25/09/2022</p>
-            <div class="qr">
-              <img src="{{ agent.qr_code.url }}" alt="QR code" crossOrigin="anonymous" />
+          <div class="validar">
+            <div>
+              <p class="fecha">Expedido:25/09/2022</p>
+              <div class="qr">
+                <img src="{{ agent.qr_code.url }}" alt="QR code" crossOrigin="anonymous" />
+              </div>
             </div>
-          </div>
-          <div class="firma">
-            <div class="firma_linea"></div>
-            <div class="firma_letra">Firma Autorizada</div>
+            <div class="firma">
+              <div class="firma_linea"></div>
+              <div class="firma_letra">Firma Autorizada</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <script>
-    function imagesLoaded(element, callback) {
-      const images = element.getElementsByTagName('img');
-      let loadedCount = 0;
-      let imageCount = images.length;
-    
-      if (imageCount === 0) {
-        callback();
-        return;
-      }
-    
-      const checkImageLoaded = () => {
-        loadedCount++;
-        if (loadedCount === imageCount) {
-          callback();
-        }
-      };
-    
-      for (let img of images) {
-        if (img.complete) {
-          checkImageLoaded();
-        } else {
-          img.onload = checkImageLoaded;
-          img.onerror = checkImageLoaded;
-          img.crossOrigin = "anonymous";
-        }
-      }
-    }
-    
-    function generatePDF() {
-      const element = document.getElementById("pageprint");
-      imagesLoaded(element, () => {
-        var options = {
-          margin: [-1, -4, 0, 0],
-          filename: "documento.pdf",
-          image: { type: "jpeg", quality: 0.9 },
-          html2canvas: {
-            scale: 2,
-            letterRendering: true,
-            useCORS: true,
-            allowTaint: true,
-          },
-          jsPDF: {
-            unit: "mm",
-            format: "a4",
-            orientation: "portrait",
-          },
-        };
-    
-        html2pdf().from(element).set(options).output('dataurlnewwindow');
-      });
-    }
-    
-  </script>
+  {% endif %}
+  {% if request|is_mobile %}
+    Mobile device stuff...
+{% endif %}
+  <script src="{% static 'scripts/print.js' %}"></script>  
   
 {% endblock %}
 
