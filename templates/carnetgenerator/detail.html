@@ -62,7 +62,7 @@
           </header>
 
           <div class="profile_picture">
-            <img src="{{ agent.profile_picture.url }}" alt="profile picture" />
+            <img src="{{ agent.profile_picture.url }}" alt="profile picture" crossOrigin="anonymous" />
           </div>
 
           <div class="personal_info">
@@ -131,7 +131,9 @@
         <div class="validar">
           <div>
             <p class="fecha">Expedido:25/09/2022</p>
-            <div class="qr"><img src="{{ agent.qr_code.url }}" alt="QR code"></div>
+            <div class="qr">
+              <img src="{{ agent.qr_code.url }}" alt="QR code" crossOrigin="anonymous" />
+            </div>
           </div>
           <div class="firma">
             <div class="firma_linea"></div>
@@ -155,19 +157,18 @@
     
       const checkImageLoaded = () => {
         loadedCount++;
-        console.log(`Imagen cargada (${loadedCount}/${imageCount})`);
         if (loadedCount === imageCount) {
           callback();
         }
       };
     
       for (let img of images) {
-        console.log(`Cargando imagen: ${img.src}`);
         if (img.complete) {
           checkImageLoaded();
         } else {
           img.onload = checkImageLoaded;
           img.onerror = checkImageLoaded;
+          img.crossOrigin = "anonymous";
         }
       }
     }
@@ -175,8 +176,6 @@
     function generatePDF() {
       const element = document.getElementById("pageprint");
       imagesLoaded(element, () => {
-        console.log("Todas las imágenes se han cargado.");
-    
         var options = {
           margin: [-1, -4, 0, 0],
           filename: "documento.pdf",
@@ -184,7 +183,8 @@
           html2canvas: {
             scale: 2,
             letterRendering: true,
-            useCORS: true
+            useCORS: true,
+            allowTaint: true,
           },
           jsPDF: {
             unit: "mm",
@@ -198,5 +198,6 @@
     }
     
   </script>
+  
 {% endblock %}
 
