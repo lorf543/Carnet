@@ -66,10 +66,10 @@
           </div>
 
           <div class="personal_info">
-            <p class="firstname">Espirtud Santo Martinez</p>
-            <p class="lastname">Mara De La Altagracia</p>
-            <p class="rango">Mayor, erd</p>
-            <p class="id_carnet">251436</p>
+            <p class="firstname">{{ agent.first_name }}</p>
+            <p class="lastname">{{ agent.last_name }}</p>
+            <p class="rango">{{ agent.rank }}</p>
+            <p class="id_carnet">{{ agent.id_carnet }}</p>
             <div class="logo_army">
               <img src="{% static '/img/Fuerzas Armadas.png' %}" alt="logo army" />
             </div>
