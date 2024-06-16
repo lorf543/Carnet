@@ -147,12 +147,12 @@
       const images = element.getElementsByTagName('img');
       let loadedCount = 0;
       let imageCount = images.length;
-
+    
       if (imageCount === 0) {
         callback();
         return;
       }
-
+    
       const checkImageLoaded = () => {
         loadedCount++;
         console.log(`Imagen cargada (${loadedCount}/${imageCount})`);
@@ -160,8 +160,9 @@
           callback();
         }
       };
-
+    
       for (let img of images) {
+        console.log(`Cargando imagen: ${img.src}`);
         if (img.complete) {
           checkImageLoaded();
         } else {
@@ -170,31 +171,32 @@
         }
       }
     }
-
+    
     function generatePDF() {
       const element = document.getElementById("pageprint");
       imagesLoaded(element, () => {
         console.log("Todas las imágenes se han cargado.");
-
+    
         var options = {
-          margin: [-1, -4, 0, 0], // Márgenes a 0 para que ocupe toda la página
+          margin: [-1, -4, 0, 0],
           filename: "documento.pdf",
           image: { type: "jpeg", quality: 0.9 },
           html2canvas: {
-            scale: 2, // Ajusta la escala según tus necesidades
+            scale: 2,
             letterRendering: true,
-            useCORS: true // Añadir uso de CORS
+            useCORS: true
           },
           jsPDF: {
             unit: "mm",
-            format: "a4", // Cambia el formato a A4
-            orientation: "portrait", // O "landscape" si prefieres
+            format: "a4",
+            orientation: "portrait",
           },
         };
-
+    
         html2pdf().from(element).set(options).output('dataurlnewwindow');
       });
     }
+    
   </script>
 {% endblock %}
 
