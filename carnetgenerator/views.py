@@ -83,26 +83,31 @@ def check_id(request):
     
 @login_required()
 @allowed_suers(allowed_roles=['Admin'])
-def agent_update(request,agent_id):
-    agent_form = AgentForm()
+def agent_update(request, agent_id):
     agent = get_object_or_404(Agent, id=agent_id)
     
     if request.user.has_perm('agent.add_agent'):
         if request.method == "POST":
-            agent_form = AgentForm(request.POST,request.FILES, instance=agent)
-            print(agent_form.errors)
+            agent_form = AgentForm(request.POST, request.FILES, instance=agent)
             if agent_form.is_valid():
                 agent = agent_form.save(commit=False)
                 agent.added_by = request.user
                 agent.save()
-                messages.success(
-                    request,'Actualizado!')
-            return redirect('home')
+                messages.success(request, 'Actualizado!')
+                return redirect('home')
+            else:
+                print("Errores de validación en POST:", agent_form.errors)
         else:
             agent_form = AgentForm(instance=agent)
+    else:
+        messages.error(request, 'No tiene permiso para actualizar este agente.')
+        return redirect('home')
 
-    context={'agent_form':agent_form}
-    return render (request,'carnetgenerator/add_carnet.html',context)
+    context = {'agent_form': agent_form}
+    return render(request, 'carnetgenerator/add_carnet.html', context)
+
+
+
 
 
 @login_required()
