@@ -1,17 +1,15 @@
 {% load static %}
 
-<table id="example" class="table table-striped table-bordered table-hover " style="width: 100%">
+<table id="carnetTable" class="table table-striped table-bordered table-hover " style="width: 100%">
 
   <thead>
     <tr>
       <th>#</th>
-      <th class="text-center">Detalles</th>
+      <th class="">Aciones</th>
       <th>Apellido</th>
       <th>Nombre</th>
       <th>Numero Carnet</th>
       <th>Estado</th>
-      <th>Estado Carnet</th>
-
     </tr>
   </thead>
 
@@ -19,12 +17,18 @@
     {% for agent in agents %}
       <tr>
         <th>{{forloop.counter }}</th>
-        <th class="text-center"><a href="{% url 'agent_detail' agent.id %}" class="btn btn-outline-success" ><i class="fa-regular fa-eye"></i></th>
+        <th class="">
+          <a href="{% url 'agent_detail' agent.id %}" class="btn btn-outline-success" >
+            <i class="fa-regular fa-eye"></i>
+          </a>
+          <a href="{% url 'agent_update' agent.id %}" class="btn btn-success">
+            <i class="fa-solid fa-pencil"></i>
+          </a>
+        </th>
         <th>{{agent.last_name}}</th>
-        <th>{{agent.first_name}}</a></th>
+        <th >{{agent.first_name}}</a></th>
         <th>{{agent.id_carnet}}</th>
         <th>{{agent.employee_status}}</th>
-        <th>{{agent.carnet_status}}</th>
 
       </tr>
     {% endfor %}

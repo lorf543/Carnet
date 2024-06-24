@@ -91,15 +91,16 @@ class AgentForm(forms.ModelForm):
         validators = [RegexValidator('^\d+(\.\d+)?$',
         message='Ingreso un numero valido (e.g., 5 or 5.5).',
         code='invalid_input')],
+        widget=forms.TextInput(attrs={'type':'number'})
     )
     eyes  = forms.CharField(
-        label='Ojos',
+        label='Color de Ojos',
         error_messages={
             'required': 'Este campo es requerido',
         },    
     )
     skin  = forms.CharField(
-        label='Piel',
+        label='Color de Piel',
         error_messages={
             'required': 'Este campo es requerido',
         },
@@ -112,6 +113,7 @@ class AgentForm(forms.ModelForm):
         error_messages={
             'required': 'Este campo es requerido',
         },
+        widget=forms.TextInput(attrs={'type':'number'})
     )
     blood_type  = forms.CharField(
         label='Tipo de sangre',
@@ -131,5 +133,8 @@ class AgentForm(forms.ModelForm):
 
     class Meta:
         model = Agent
-        fields = "__all__"
+        fields = (
+            'profile_picture','first_name','last_name','rank','employee_status',
+            'carnet_status','identification','height','eyes','skin','weight','blood_type'
+            )
 

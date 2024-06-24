@@ -39,11 +39,18 @@ class Agent(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.id_carnet:
-            while True:
-                random_code = random.randint(10000000, 99999999)
-                if not Agent.objects.filter(id_carnet=random_code).exists():
-                    self.id_carnet = random_code
-                    break            
+            # Encuentra el valor máximo actual de id_carnet en la base de datos
+            max_id = Agent.objects.aggregate(models.Max('id_carnet'))['id_carnet__max']
+            if max_id is None:
+                # Si no hay ningún registro en la base de datos, empieza en 1
+                new_id = 1
+            else:
+                # Incrementa el valor máximo en 1
+                new_id = int(max_id) + 1
+
+            # Formatea el nuevo id_carnet para que tenga 4 dígitos con ceros a la izquierda
+            self.id_carnet = f"{new_id:04d}"
+
 
             qrcode_image = qrcode.make(self.id_carnet)
             canvas = Image.new('RGB', (290, 290), 'white')
@@ -54,5 +61,7 @@ class Agent(models.Model):
             canvas.save(buffer, 'PNG')
             self.qr_code.save(fname, File(buffer), save=False)
             canvas.close()
+        else:
+            pass
 
         super().save(*args, **kwargs)
